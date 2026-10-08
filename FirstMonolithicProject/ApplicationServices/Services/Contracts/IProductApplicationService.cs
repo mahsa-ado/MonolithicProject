@@ -22,8 +22,11 @@ namespace FirstMonolithicProject.ApplicationServices.Services.Contracts
         #region [- GetAllProducts() -]
         Task<List<GetProductDto>> GetAllProducts();
 
-        #endregion    
+        #endregion
 
+        #region [- GetById() -]
         Task<GetProductDtoById> GetById(int id);
+
+        #endregion    
     }
 }

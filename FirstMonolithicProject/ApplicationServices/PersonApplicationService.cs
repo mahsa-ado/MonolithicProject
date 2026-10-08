@@ -18,7 +18,10 @@ namespace FirstMonolithicProject.ApplicationServices
 
         #region [- Update() -]
         public async Task Put(UpdatePersonDto updatePersonDto)
-        {
+        {   if(updatePersonDto == null)
+            { 
+                return ;
+            }
             var updatePerson = new Models.DomainModels.PersonAggregates.Person()
             {
                 Id = updatePersonDto.Id,
@@ -34,6 +37,10 @@ namespace FirstMonolithicProject.ApplicationServices
         #region [- Delete() -]
         public async Task Delete(DeletePersonDto deletePersonDto)
         {
+            if(deletePersonDto == null)
+            {
+                return;
+            }
             var deletePerson = new Models.DomainModels.PersonAggregates.Person()
             {  
                 Id = deletePersonDto.Id,
@@ -49,6 +56,10 @@ namespace FirstMonolithicProject.ApplicationServices
         #region [- Post() -]
         public async Task Post(PostPersonDto postPersonDto)
         {
+            if(postPersonDto == null)
+            {
+                return;
+            }
             var person = new Models.DomainModels.PersonAggregates.Person()
             {
                 Id = postPersonDto.Id,
@@ -81,12 +92,12 @@ namespace FirstMonolithicProject.ApplicationServices
         #endregion
 
         #region [- GetById() -]
-        public async Task<GetPersonDtoById> GetById(int Id)
+        public async Task<GetPersonDtoById?> GetById(int Id)
         {
             var person = await _personRepository.SelectById(Id);
             if (person == null)
             {
-                return null;
+                return null ;
             }
             var getPersonDto = new GetPersonDtoById()
             {

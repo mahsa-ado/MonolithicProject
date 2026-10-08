@@ -1,6 +1,7 @@
 ﻿using FirstMonolithicProject.ApplicationServices.Dtos.ProductDtos;
 using FirstMonolithicProject.ApplicationServices.Services.Contracts;
 using FirstMonolithicProject.Models.Services.Contracts;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FirstMonolithicProject.ApplicationServices
@@ -18,20 +19,29 @@ namespace FirstMonolithicProject.ApplicationServices
         #region [- Put() -]
         public async Task Put(UpdateProductDto updateProductDto)
         {
-            var products = new Models.DomainModels.ProductAggregates.Product()
+            if(updateProductDto == null)
+            {
+                return;
+            }
+            var updateProduct = new Models.DomainModels.ProductAggregates.Product()
             {
                 Id=updateProductDto.Id,
                 Title = updateProductDto.Title,
                 Price = updateProductDto.Price,
                 Description = updateProductDto.Description,
             };
-            await _productRepository.Update(products);
+            
+            await _productRepository.Update(updateProduct);
         }
         #endregion
 
         #region [- Delete() -]
         public async Task Delete(DeleteProductDto deleteProductDto)
         {
+            if(deleteProductDto== null)
+            {
+                return;
+            }
             var deleteProducts = new Models.DomainModels.ProductAggregates.Product()
             {
                 Id=deleteProductDto.Id,
@@ -46,8 +56,13 @@ namespace FirstMonolithicProject.ApplicationServices
         #region [- Post() -]
         public async Task Post(PostProductDto postProductDto)
         {
+            if(postProductDto == null)
+            {
+                return;
+            }
             var products = new Models.DomainModels.ProductAggregates.Product()
             {
+                Id= postProductDto.Id,
                 Title = postProductDto.Title,
                 Price = postProductDto.Price,
                 Description = postProductDto.Description,
@@ -60,8 +75,9 @@ namespace FirstMonolithicProject.ApplicationServices
         #region [- GetAll() -]
         public async Task<List<GetProductDto>> GetAllProducts()
         {
+            
             var products = await _productRepository.SelectAll();
-            var getProductDto = new List<GetProductDto>();
+            var getDto = new List<GetProductDto>();
             foreach (var product in products)
             {
                 var productDto = new GetProductDto()
@@ -71,23 +87,24 @@ namespace FirstMonolithicProject.ApplicationServices
                     Price = product.Price,
                     Description = product.Description,
                 };
-                getProductDto.Add(productDto);
+                getDto.Add(productDto);
             }
-            return getProductDto;
+            return getDto;
         }
 
 
         #endregion
 
         #region [- GetById() -]
-        public async Task<GetProductDtoById> GetById(int Id)
+        public async Task<GetProductDtoById?> GetById(int Id)
         {
+            
             var product = await _productRepository.SelectById(Id);
             if (product == null)
             {
                 return null;
             }
-            var getById = new GetProductDtoById()
+            var getProduct = new GetProductDtoById()
             {
                 Id = product.Id,
                 Title = product.Title,
@@ -95,7 +112,7 @@ namespace FirstMonolithicProject.ApplicationServices
                 Description = product.Description,
             };
 
-            return getById;
+            return getProduct;
         }
 
         #endregion

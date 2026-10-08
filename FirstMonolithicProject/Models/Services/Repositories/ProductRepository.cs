@@ -22,7 +22,7 @@ namespace FirstMonolithicProject.Models.Services.Repositories
                 _projectDbContext.Update(product);
                 await _projectDbContext.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 throw;
             }
@@ -37,7 +37,7 @@ namespace FirstMonolithicProject.Models.Services.Repositories
                 _projectDbContext.Remove(product);
                 await _projectDbContext.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 throw;
             }
@@ -52,7 +52,7 @@ namespace FirstMonolithicProject.Models.Services.Repositories
                 _projectDbContext.Add(product);
                 await _projectDbContext.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 throw;
             }
@@ -82,11 +82,11 @@ namespace FirstMonolithicProject.Models.Services.Repositories
             {
                 return await _projectDbContext.Product.FirstOrDefaultAsync(x => x.Id == Id);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 throw;
             }
-        } 
+        }  
         #endregion
 
     }
